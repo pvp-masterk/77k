@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>77K Clan | SwiftSMP</title>
+    <style>
+        /* --- ENHANCED B&W THEME --- */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-color: #050505;
+            --surface-color: #111111;
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --accent: #ffffff;
+            --glow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Rajdhani', sans-serif;
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #050505 50%);
+        }
+
+        /* Typography */
+        h1, h2, h3 { font-family: 'Orbitron', sans-serif; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { text-align: center; margin-bottom: 40px; font-size: 2.5rem; text-shadow: var(--glow); }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: 0.3s;
+        }
+        nav a:hover { color: var(--text-muted); text-shadow: var(--glow); }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 60px;
+        }
+        .clan-logo {
+            width: 350px;
+            max-width: 80%;
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+            animation: pulse 4s infinite alternate;
+            margin-bottom: 20px;
+        }
+        .server-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            background: var(--surface-color);
+            padding: 10px 25px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .server-info img {
+            width: 40px;
+            image-rendering: pixelated;
+            filter: grayscale(100%);
+            transition: 0.3s;
+        }
+        /* Hovering over the SwiftSMP logo reveals its true color */
+        .server-info:hover img { filter: grayscale(0%); transform: scale(1.1); }
+
+        /* Roster Sections */
+        section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .member-card {
+            background: var(--surface-color);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .member-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, #fff, transparent);
+            transition: 0.5s;
+        }
+        .member-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 5px 15px rgba(255,255,255,0.1);
+        }
+        .member-card:hover::before { left: 100%; }
+        
+        .avatar {
+            width: 80px; height: 80px;
+            background: #222;
+            border-radius: 50%;
+            margin: 0 auto 15px auto;
+            border: 2px solid var(--text-muted);
+        }
+        .leader .avatar { border-color: var(--accent); box-shadow: 0 0 10px rgba(255,255,255,0.3); }
+
+        /* Discord Section */
+        #discord { text-align: center; }
+        .stats-box {
+            background: var(--surface-color);
+            display: inline-block;
+            padding: 20px 40px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 40px;
+        }
+        .online-dot {
+            display: inline-block; width: 10px; height: 10px;
+            background-color: #fff; /* White for theme, usually green */
+            border-radius: 50%; margin-right: 10px;
+            box-shadow: 0 0 8px #fff;
+            animation: blink 2s infinite;
+        }
+
+        /* Custom Invite Style */
+        .custom-invite {
+            font-family: 'Courier New', Courier, monospace;
+            background: #000;
+            border: 1px solid #333;
+            padding: 40px;
+            border-radius: 8px;
+            display: inline-block;
+            text-align: center;
+            line-height: 1.5;
+            transition: 0.3s;
+        }
+        .custom-invite:hover {
+            border-color: #fff;
+            box-shadow: var(--glow);
+        }
+        .custom-invite a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+        .custom-invite .divider { color: var(--text-muted); letter-spacing: 2px; }
+        .custom-invite .stats-line { font-size: 1.2rem; color: #ccc; margin: 10px 0; }
+        .custom-invite .stats-line strong { color: #fff; }
+
+        /* Footer & Secret Links */
+        footer {
+            text-align: center; padding: 40px; border-top: 1px solid #222; margin-top: 50px; color: var(--text-muted);
+        }
+        .secret-links a { text-decoration: none; color: var(--bg-color); /* Hidden against background */ }
+        .secret-links a:hover { color: #fff; text-shadow: var(--glow); } /* Appears on hover */
+
+        /* Animations */
+        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div style="font-family: 'Orbitron'; font-weight: 900; font-size: 1.5rem; letter-spacing: 2px;">77K</div>
+        <div>
+            <a href="#home">Home</a>
+            <a href="#roster">Roster</a>
+            <a href="#discord">Discord</a>
+        </div>
+    </nav>
+
+    <header id="home">
+        
+        <img src="clan-logo.png" alt="77K Clan Logo" class="clan-logo" onerror="this.src='https://via.placeholder.com/350x350/000000/FFFFFF?text=CLAN+LOGO'">
+        <h1>The 77K Clan</h1>
+        
+        <div class="server-info">
+            <span>Dominating on</span>
+            
+            <img src="https://th.bing.com/th/id/OIP.9_YLlxPpUyONWg2N9wqNSwHaHa?w=108&h=108&c=1&bgcl=894a54&r=0&o=7&pid=ImgRC&rm=3" alt="SwiftSMP Logo" onerror="this.src='https://via.placeholder.com/40x40/000000/FFFFFF?text=BIRD'">
+            <span style="font-family: 'Orbitron'; font-weight: bold;">SwiftSMP</span>
+        </div>
+    </header>
+
+    <section id="roster">
+        <h2>Leadership</h2>
+        <div class="grid" style="margin-bottom: 60px;">
+            
+            <div class="member-card leader">
+                <div class="avatar"></div>
+                <h3>LeaderName</h3>
+                <p style="color: var(--text-muted);">Founder</p>
+            </div>
+            <div class="member-card leader">
+                <div class="avatar"></div>
+                <h3>CoLeaderName</h3>
+                <p style="color: var(--text-muted);">Co-Leader</p>
+            </div>
+        </div>
+
+        <h2>Members</h2>
+        <div class="grid">
+            
+            <div class="member-card">
+                <div class="avatar"></div>
+                <h3>MemberOne</h3>
+                <p style="color: var(--text-muted);">PvP Specialist</p>
+            </div>
+            <div class="member-card">
+                <div class="avatar"></div>
+                <h3>MemberTwo</h3>
+                <p style="color: var(--text-muted);">Builder</p>
+            </div>
+            <div class="member-card">
+                <div class="avatar"></div>
+                <h3>MemberThree</h3>
+                <p style="color: var(--text-muted);">Grinder</p>
+            </div>
+            <div class="member-card">
+                <div class="avatar"></div>
+                <h3>MemberFour</h3>
+                <p style="color: var(--text-muted);">Member</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="discord">
+        <h2>Join The Ranks</h2>
+        
+        
+        <div class="stats-box" id="widget-container">
+            <span class="online-dot"></span>
+            <span id="discord-status">Loading Server Stats...</span>
+        </div>
+
+        <br>
+
+       
+        <div class="custom-invite">
+            <a href="https://discord.gg/fK3AkyW3Cy" target="_blank">77K</a>
+            <div class="divider">------ &nbsp; &nbsp;--- &nbsp; &nbsp;---</div>
+            <div class="stats-line">- <strong>77K</strong> &nbsp;·&nbsp; <strong>@</strong> &nbsp;·&nbsp; <strong>505</strong> -</div>
+            <div class="divider">------ &nbsp; &nbsp;--- &nbsp; &nbsp;---</div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 77K Clan. All rights reserved.</p>
+        
+        
+        <div class="secret-links" style="margin-top: 10px;">
+            <a href="https://open.spotify.com/track/23SZWX2IaDnxmhFsSLvkG2?si=a8dfe5dc2f0545b8" target="_blank">.</a> &nbsp;&nbsp;&nbsp;
+            <a href="https://open.spotify.com/track/23SZWX2IaDnxmhFsSLvkG2?si=a8dfe5dc2f0545b8" target="_blank">.</a> &nbsp;&nbsp;&nbsp;
+            <a href="https://open.spotify.com/track/23SZWX2IaDnxmhFsSLvkG2?si=a8dfe5dc2f0545b8" target="_blank">.</a>
+        </div>
+    </footer>
+
+    <script>
+        // Fetch Discord Data
+        async function fetchDiscordData() {
+            const widgetUrl = 'https://discord.com/api/guilds/1487823054871593202/widget.json';
+            const statusText = document.getElementById('discord-status');
+
+            try {
+                const response = await fetch(widgetUrl);
+                if (!response.ok) throw new Error('Widget disabled or invalid ID');
+                
+                const data = await response.json();
+                statusText.innerHTML = `<strong>${data.presence_count}</strong> Members Online`;
+            } catch (error) {
+                console.warn("Could not load widget. Make sure 'Enable Server Widget' is checked in your Discord Server Settings.");
+                // Fallback text if widget is disabled or API fails
+                statusText.innerHTML = "Discord Server Active - Join Below";
+            }
+        }
+
+        // Run fetch on load
+        fetchDiscordData();
+    </script>
+</body>
+</html>
